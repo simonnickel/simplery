@@ -1,0 +1,128 @@
+/* Content:
+	* marker-clear
+	* marker-general-layout
+	* marker-general-style
+
+	* marker-style
+	* marker-layout
+*
+* {
+	outline:1px solid #000
+}
+
+
+/*	marker-clear	*/
+
+* {
+	margin:0; padding:0;
+	border:none;
+	line-height:1em;
+}
+body {
+	-webkit-text-size-adjust: none;
+	-webkit-font-smoothing: subpixel-antialiased;
+}
+a {
+	text-decoration:none;
+}
+.clear {
+	clear:both;
+}
+
+
+/*	marker-general-style	*/
+
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight:normal;	
+	font-size:16px;
+	background:url('texture_turq.jpg') repeat;
+	color:#ddd;
+}
+body>div {
+	background:url('light.png') top center no-repeat;
+}
+p {
+	line-height:1.5em;
+}
+a {
+	color:#ddd;
+}
+h1 {
+	font-size:40px;
+}
+
+
+/*	marker-general-layout	*/
+
+body>div {
+	width:1200px; /* @media ab max-width=width umstellen */
+
+	min-height:600px;
+	margin:auto;
+}
+	@media screen and (max-width: 1199px) {body>div {width:900px;}}
+	@media screen and (max-width: 899px) {body>div {width:100%;}}
+#frame, 
+body>footer>div {
+	position:relative;
+	padding:10px;
+}
+#frame>*,
+body>footer>div>* {
+	position:relative;	
+	width:100%;
+	padding:10px 0;
+}
+body>footer {
+
+	width:100%;
+}
+
+@media screen and (max-width: 899px) {
+	body>div {width:100%;}
+}
+
+
+/*	marker-style	*/
+#frame>article>section>p {
+	background:rgba(0,0,0,0.5);
+	border-radius:2px;
+}
+
+.simplery, 
+.simplery-nojs {
+	background: rgba(0,0,0,0.5);
+	border-radius: 2px;
+}
+
+
+/*	marker-layout	*/
+
+#frame>header {
+	margin-bottom: 30px
+}
+#frame>header nav {
+	position:absolute;
+	bottom:20px; right:0;
+}
+#frame>header nav li {
+	display:inline;
+	margin:0 10px;
+}
+#frame>article>section div {
+	margin:20px 0;
+}
+
+#frame>article>section>p {
+	width:600px;
+	margin:auto;
+	padding:10px;
+	margin-bottom:20px;
+}
+
+.simplery, 
+.simplery-nojs {
+	padding: 10px;
+}
+
