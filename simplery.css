@@ -4,7 +4,6 @@
 	list-style: none;
 	text-align: center;
 }
-.simplery ul *,
 .simplery-nojs ul * {
 	text-align: left;
 }
@@ -17,6 +16,7 @@
 .simplery-nojs.simplery-2 li {width: 49%;}
 .simplery-nojs.simplery-3 li {width: 33%;}
 .simplery-nojs.simplery-4 li {width: 24%;}
+.simplery-nojs.simplery-5 li {width: 19%;}
 .simplery-nojs li>* {
 	width:100%;
 }
@@ -36,13 +36,35 @@
 
 /* simplery */
 
+
 .simplery ul {
 	list-style: none;
+}
+.simplery li {
+	position: relative;
+	overflow: hidden;
+}
+.simplery li:hover {
+	overflow: visible;
+	z-index:9999;
+}
+.simplery li:hover img {
+	position: absolute; top:0; left:0;
+	box-shadow: 0px 0px 15px 5px #111;
+	border-radius: 2px;
 }
 .simplery.simplery-2 li {width: 50%;}
 .simplery.simplery-3 li {width: 33.3%;}
 .simplery.simplery-4 li {width: 25%;}
+.simplery.simplery-5 li {width: 20%;}
 
+.simplery img {
+	position: relative;
+	top:0; left:0;
+}
+.simplery img:hover {
+
+}
 
 .simplery .simplery-title,
 .simplery .simplery-description {

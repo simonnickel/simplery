@@ -1,11 +1,29 @@
+/*
+ * when html is loaded
+*/
 $(document).ready(function() {
 	var galeries = $(".simplery-nojs");
+	
 	galeries.simpleryInit();
 });
 
+/*
+ * when css+images are loaded
+*/
 $(window).load(function() {
 	var galeries = $(".simplery");
-	galeries.simpleryManipulate();
+	
+	// layout
+	galeries.each(function() {
+		$(this).simpleryManipulate();
+	});
+
+	// hover
+	$(".simplery li").hover(
+		function() {$(this).simpleryHover(0);},
+		function() {$(this).simpleryHover(1);}
+	);
+
 });
 
 /*
@@ -38,33 +56,79 @@ $(window).load(function() {
 */
 (function( $ ){$.fn.simpleryLayout = function() {
 	var galery = $(this);
-	var ul = galery.children("ul");
-	var li = ul.children("li");
+	var ul = galery.find("ul");
+	var li = galery.find("li");
+	var img = galery.find("img");
 
 	// fix li linebreak whitespace "bug"
 	var fontSize = ul.css("font-size");
 	ul.css("font-size", "0px");
 	li.css("font-size", fontSize);
 
+
 	// adjust size to get squares
-	li.each(function() {
-		var li = $(this);
-		var img = li.children("img");
-		
-		var blockWidth = li.width();
-		var ratio = parseFloat(img.width()) / parseFloat(img.height());
+	var blockWidth = li.width();
+	li.height(blockWidth);
 
-		alert(ratio);
-		
-		li.css("height", blockWidth);
-		img.css("height", blockWidth);
+	img.each(function() {
+		var img = $(this);
+		var ratio = img.width() / img.height();
 
+		// portrait: move img to top
+		if (img.width() < img.height()) {
+			img.width(blockWidth);
+			img.height(blockWidth * 1/ratio);
+			img.css("top", (img.height() - img.width()) / -2);
+		}
+		else { // landscape: make bigger and move left
+			img.height(blockWidth);
+			img.width(blockWidth * ratio);
+			img.css("left", (img.width() - img.height()) / -2);
+		}
+	});	
 
-		//alert();
+	return this;
+};})( jQuery );
 
-	});
-	
-	
+/*
+ * hover
+*/
+(function( $ ){$.fn.simpleryHover = function(inout) {
+	var li = $(this);
+	var img = li.find("img");
+	var ratio = img.width() / img.height();
+
+	if (inout == 0) {
+		//alert(parseFloat(img.css("top"))+10);
+		img.css({
+			transition : 'width 0.3s, height 0.3s, left 0.3s, top 0.3s'
+		});
+		img.css("width", parseFloat(img.css("width"))+20*ratio);
+		img.css("height", parseFloat(img.css("height"))+20*ratio);
+		img.css("left", parseFloat(img.css("left"))-10);
+		img.css("top", parseFloat(img.css("top"))-10);
+		//alert(img.css("top"));
+		/*
+		li.css("overflow", "visible");
+		li.css("z-index", "9999");
+
+		img.css("position", "absolute");
+		*/
+	}
+	else {
+		img.css("width", parseFloat(img.css("width"))-20*ratio);
+		img.css("height", parseFloat(img.css("height"))-20*ratio);
+		img.css("left", parseFloat(img.css("left"))+10);
+		img.css("top", parseFloat(img.css("top"))+10);
+		/*
+		li.css("overflow", "hidden");
+		li.css("z-index", "auto");
+
+		img.css("position", "relative");
+		*/
+	}
+
+	//alert('test');
 
 	return this;
 };})( jQuery );
