@@ -1,0 +1,57 @@
+/* before simplery.js manipulates */
+.simplery ul,
+.simplery-nojs ul {
+	list-style: none;
+	text-align: center;
+}
+.simplery ul *,
+.simplery-nojs ul * {
+	text-align: left;
+}
+.simplery li,
+.simplery-nojs li {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+.simplery-nojs.simplery-2 li {width: 49%;}
+.simplery-nojs.simplery-3 li {width: 33%;}
+.simplery-nojs.simplery-4 li {width: 24%;}
+.simplery-nojs li>* {
+	width:100%;
+}
+.simplery img,
+.simplery-nojs img {
+	margin: 0;
+	padding: 0;
+	width:100%;
+}
+.simplery-nojs img {
+	border-radius: 2px;
+}
+.simplery-title {
+	font-weight: bold;
+}
+
+
+/* simplery */
+
+.simplery ul {
+	list-style: none;
+}
+.simplery.simplery-2 li {width: 50%;}
+.simplery.simplery-3 li {width: 33.3%;}
+.simplery.simplery-4 li {width: 25%;}
+
+
+.simplery .simplery-title,
+.simplery .simplery-description {
+	display: none;
+}
+
+.simplery .simplery-title {
+	font-weight: bold;
+}
+.simplery .simplery-description {
+	
+}
