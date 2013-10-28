@@ -13,8 +13,8 @@
 var hover_zoom_1 = -200;
 var hover_zoom_2 = -100;
 var hover_zoom_3 = -14;
-var hover_zoom_4 = 10;
-var hover_zoom_5 = 20;
+var hover_zoom_4 = 6;
+var hover_zoom_5 = 14;
 var hover_offset_border = 10;
 
 

@@ -48,7 +48,7 @@
 .simplery-box li {
 	position: relative;
 	overflow: hidden;
-	vertical-align:top;
+	vertical-align: top;
 }
 .simplery-box li:hover {
 	overflow: visible;
