@@ -33,23 +33,24 @@ a {
 /*	marker-general-style	*/
 
 body {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-weight:normal;	
-	font-size:16px;
+	font-size:15px;
 	background:url('texture_turq.jpg') repeat;
 	color:#ddd;
 }
 body>div {
 	background:url('light.png') top center no-repeat;
 }
+h1 {
+	font-family: 'Lobster', cursive;
+	font-size: 60px;
+}
 p {
 	line-height:1.5em;
 }
 a {
 	color:#ddd;
-}
-h1 {
-	font-size:40px;
 }
 
 
@@ -75,7 +76,6 @@ body>footer>div>* {
 	padding:10px 0;
 }
 body>footer {
-
 	width:100%;
 }
 
@@ -86,7 +86,7 @@ body>footer {
 
 /*	marker-style	*/
 #frame>article>section>p {
-	background:rgba(0,0,0,0.5);
+	background:rgba(0,0,0,0.1);
 	border-radius:2px;
 }
 
@@ -100,7 +100,7 @@ body>footer {
 /*	marker-layout	*/
 
 #frame>header {
-	margin-bottom: 30px
+	margin-bottom: 10px
 }
 #frame>header nav {
 	position:absolute;
@@ -117,7 +117,7 @@ body>footer {
 #frame>article>section>p {
 	width:600px;
 	margin:auto;
-	padding:10px;
+	padding:20px;
 	margin-bottom:20px;
 }
 

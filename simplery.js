@@ -75,13 +75,24 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	var ul = galery.find("ul");
 	var li = galery.find("li");
 	var img = galery.find("img");
-	var blockWidth = li.width();
 
 	// fix li linebreak whitespace
 	var fontSize = ul.css("font-size");
 	ul.css("font-size", "0px");
 	li.css("font-size", fontSize);
 	
+	galery.simpleryBoxSize();
+
+	return this;
+};})( jQuery );
+
+// size for the simplery box
+(function( $ ){$.fn.simpleryBoxSize = function() {
+	var galery = $(this);
+	var li = galery.find("li");
+	var img = galery.find("img");
+	var blockWidth = li.width();
+
 	li.each(function() {
 		$(this).height(blockWidth);
 	});
