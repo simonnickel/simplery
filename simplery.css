@@ -1,4 +1,17 @@
-/* before simplery.js manipulates */
+/* Content:
+ *
+	* without JavaScript 
+	* simplery-box
+ *
+ */
+
+/* 
+ * without JavaScript 
+ */
+.simplery-box * {
+	margin: 0;
+	padding: 0;
+}
 .simplery-box ul,
 .simplery-nojs ul {
 	list-style: none;
@@ -10,8 +23,6 @@
 .simplery-box li,
 .simplery-nojs li {
 	display: inline-block;
-	margin: 0;
-	padding: 0;
 }
 .simplery-nojs.simplery-1 li {width: 99%;}
 .simplery-nojs.simplery-2 li {width: 49%;}
@@ -21,13 +32,8 @@
 .simplery-nojs li>* {
 	width:100%;
 }
-.simplery-box img,
 .simplery-nojs img {
-	margin: 0;
-	padding: 0;
 	width:100%;
-}
-.simplery-nojs img {
 	border-radius: 2px;
 }
 .simplery-title {
@@ -35,7 +41,9 @@
 }
 
 
-/* simplery-box */
+/* 
+ * simplery-box 
+ */
 
 .simplery-box li {
 	position: relative;
@@ -46,24 +54,24 @@
 	overflow: visible;
 	z-index: 9999;
 }
-.simplery-box li:hover img {
-	position: absolute; top:0; left:0;
-	box-shadow: 0px 0px 15px 5px #111;
-	border-radius: 2px;
-}
 .simplery-box.simplery-1 li {width: 100%;}
 .simplery-box.simplery-2 li {width: 50%;}
 .simplery-box.simplery-3 li {width: 33.3%;}
 .simplery-box.simplery-4 li {width: 25%;}
 .simplery-box.simplery-5 li {width: 20%;}
 
-.simplery-box li img {
+.simplery-box img {
+	width:100%;
 	position: relative;
 	top: 0; left: 0;
 	-webkit-transition: width 0.2s, height 0.2s, left 0.2s, top 0.2s;
 	transition: width 0.2s, height 0.2s, left 0.2s, top 0.2s;
 }
-
+.simplery-box li:hover img {
+	position: absolute; top:0; left:0;
+	box-shadow: 0px 0px 15px 5px #111;
+	border-radius: 2px;
+}
 .simplery-box .simplery-title,
 .simplery-box .simplery-description {
 	display: none;
