@@ -1,5 +1,5 @@
 /* before simplery.js manipulates */
-.simplery ul,
+.simplery-box ul,
 .simplery-nojs ul {
 	list-style: none;
 	text-align: center;
@@ -7,7 +7,7 @@
 .simplery-nojs ul * {
 	text-align: left;
 }
-.simplery li,
+.simplery-box li,
 .simplery-nojs li {
 	display: inline-block;
 	margin: 0;
@@ -21,7 +21,7 @@
 .simplery-nojs li>* {
 	width:100%;
 }
-.simplery img,
+.simplery-box img,
 .simplery-nojs img {
 	margin: 0;
 	padding: 0;
@@ -35,45 +35,36 @@
 }
 
 
-/* simplery */
+/* simplery-box */
 
-.simplery li {
-}
-.simplery li {
+.simplery-box li {
 	position: relative;
 	overflow: hidden;
 	vertical-align:top;
 }
-.simplery li:hover {
+.simplery-box li:hover {
 	overflow: visible;
 	z-index: 9999;
 }
-.simplery li:hover img {
+.simplery-box li:hover img {
 	position: absolute; top:0; left:0;
 	box-shadow: 0px 0px 15px 5px #111;
 	border-radius: 2px;
 }
-.simplery.simplery-1 li {width: 100%;}
-.simplery.simplery-2 li {width: 50%;}
-.simplery.simplery-3 li {width: 33.3%;}
-.simplery.simplery-4 li {width: 25%;}
-.simplery.simplery-5 li {width: 20%;}
+.simplery-box.simplery-1 li {width: 100%;}
+.simplery-box.simplery-2 li {width: 50%;}
+.simplery-box.simplery-3 li {width: 33.3%;}
+.simplery-box.simplery-4 li {width: 25%;}
+.simplery-box.simplery-5 li {width: 20%;}
 
-.simplery li img {
+.simplery-box li img {
 	position: relative;
 	top: 0; left: 0;
 	-webkit-transition: width 0.2s, height 0.2s, left 0.2s, top 0.2s;
 	transition: width 0.2s, height 0.2s, left 0.2s, top 0.2s;
 }
 
-.simplery .simplery-title,
-.simplery .simplery-description {
+.simplery-box .simplery-title,
+.simplery-box .simplery-description {
 	display: none;
-}
-
-.simplery .simplery-title {
-	font-weight: bold;
-}
-.simplery .simplery-description {
-	
 }

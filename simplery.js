@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 	$(".simplery-nojs").each(function() {
 		$(this).removeClass("simplery-nojs");
-		$(this).addClass("simplery");
+		$(this).addClass("simplery-box");
 	});
 
 });
@@ -35,11 +35,11 @@ $(document).ready(function() {
 // when css+images are loaded
 $(window).load(function() {
 	
-	$(".simplery").each(function() {
+	$(".simplery-box").each(function() {
 		$(this).simpleryBoxLayout();
 	});
 
-	$(".simplery li").hover(
+	$(".simplery-box li").hover(
 		function() {$(this).simpleryBoxImageHover(1);},
 		function() {$(this).simpleryBoxImageHover(0);}
 	);
@@ -49,7 +49,7 @@ $(window).load(function() {
 // when window is resized
 $(window).resize(function() {
 
-	$(".simplery").each(function() {
+	$(".simplery-box").each(function() {
 		$(this).simpleryBoxSize();
 	});
 

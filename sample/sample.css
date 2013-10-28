@@ -90,7 +90,7 @@ body>footer {
 	border-radius:2px;
 }
 
-.simplery, 
+.simplery-box, 
 .simplery-nojs {
 	background: rgba(0,0,0,0.5);
 	border-radius: 2px;
@@ -121,7 +121,7 @@ body>footer {
 	margin-bottom:20px;
 }
 
-.simplery, 
+.simplery-box, 
 .simplery-nojs {
 	padding: 10px;
 }
