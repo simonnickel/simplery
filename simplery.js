@@ -11,7 +11,7 @@
  * SETTINGS
  */
 
-var hoverZoom = [0, 0, -100, -50, -20, -10, 14, 14]; // defines zoomfactor for each rowlength, count-1 = rowlengthOptions
+var hoverZoom = [0, 0, 65, 70, 75, 80, 85, 90]; // defines zoomfactor for each rowlength, count-1 = rowlengthOptions
 var hover_offset_border = 10;
 
 var rowlengthClass = 'simplery-';
@@ -128,8 +128,6 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	else if (galery.width() >= 1250)
 		rowlength = '7';
 
-	//alert(galery.width() +  ' ' + rowlength);
-
 	galery.addClass(rowlengthClass + rowlength.toString());
 
 	return this;
@@ -168,7 +166,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 		height = width * 1 / ratio;
 	else // landscape
 		width = width * ratio;
-	
+
 	img.width(width);
 	img.height(height);
 
@@ -263,14 +261,12 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	if (mouseIn == 1) {
 		var rowlength = galery.simpleryGetRowlength();
-		var zoom = hoverZoom[rowlength];
+		var zoom = hoverZoom[rowlength] * 1/100;
 
-		if (galery.hasClass("simplery-fullscreen") && zoom < 0) 
-			zoom *= 2;
-		else if (galery.hasClass("simplery-fullscreen") && zoom >= 0)
-			zoom *= -2;
 
-		img.simpleryBoxImageSize(blockWidth + zoom);
+
+
+		img.simpleryBoxImageSize(blockWidth * zoom);
 
 		// wait until transition proceeded to check if image will be outisde of window
 		setTimeout(function() {
