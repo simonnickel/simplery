@@ -11,7 +11,7 @@
  * SETTINGS
  */
 
-var hoverZoom = [0, 0, 65, 70, 75, 80, 85, 90]; // defines zoomfactor for each rowlength, count-1 = rowlengthOptions
+var hoverZoom = [0, 0, 75, 80, 85, 90, 95, 95]; // defines zoomfactor for each rowlength, count-1 = rowlengthOptions
 var hover_offset_border = 10;
 
 var rowlengthClass = 'simplery-';
@@ -261,12 +261,8 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	if (mouseIn == 1) {
 		var rowlength = galery.simpleryGetRowlength();
-		var zoom = hoverZoom[rowlength] * 1/100;
 
-
-
-
-		img.simpleryBoxImageSize(blockWidth * zoom);
+		img.simpleryBoxImageSize(blockWidth * (hoverZoom[rowlength] * 1/100));
 
 		// wait until transition proceeded to check if image will be outisde of window
 		setTimeout(function() {
