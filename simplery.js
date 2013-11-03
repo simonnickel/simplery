@@ -11,10 +11,11 @@
  * SETTINGS
  */
 
-var hoverZoom = [0, 0, 75, 80, 85, 90, 95, 95]; // defines zoomfactor for each rowlength, count-1 = rowlengthOptions
+var hoverZoom = [0, 0, 85, 85, 85, 90, 90, 90, 90]; // defines zoomfactor for each rowlength, count-1 = rowlengthOptions
 var hover_offset_border = 10;
 
 var rowlengthClass = 'simplery-';
+var autoRowWidth = 200;
 
 
 /*
@@ -117,16 +118,18 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 		galery.removeClass(rowlengthClass + i.toString());
 
 	var rowlength;
-	if (galery.width() < 500)
+	if (galery.width() < 3 * autoRowWidth)
 		rowlength = '3';
-	else if (galery.width() < 750)
+	else if (galery.width() < 4 * autoRowWidth)
 		rowlength = '4';
-	else if (galery.width() < 1000)
+	else if (galery.width() < 5 * autoRowWidth)
 		rowlength = '5';
-	else if (galery.width() < 1250)
+	else if (galery.width() < 6 * autoRowWidth)
 		rowlength = '6';
-	else if (galery.width() >= 1250)
+	else if (galery.width() < 7 * autoRowWidth)
 		rowlength = '7';
+	else if (galery.width() >= 7 * autoRowWidth)
+		rowlength = '8';
 
 	galery.addClass(rowlengthClass + rowlength.toString());
 
