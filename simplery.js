@@ -210,10 +210,9 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	fullscreens.each(function() {
 		$(this).click(function() {
+			galery.simpleryFullscreenEnd();
 			if (mode == 'box')
-				galery.simpleryFullscreenStart();
-			else if (mode == 'fullscreen')
-				galery.simpleryFullscreenEnd();
+				galery.simpleryFullscreenStart();				
 		})
 	});
 
@@ -227,7 +226,6 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	menu.find('.simplery-menu-grid').each(function() {
 		$(this).click(function() {
-			galery.simpleryFullscreenEnd();
 			galery.simpleryFullscreenStart();
 		})
 	});
@@ -252,6 +250,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 (function( $ ){$.fn.simpleryFullscreenStart = function(img) {
 	var body = $('body');
 	var galery = $(this);
+	galery.simpleryFullscreenEnd();
 
 	body.css('overflow','hidden');
 	body.append('<div class="simplery simplery-fullscreen"></div>');	
@@ -260,18 +259,22 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	galeryFullscreen.simpleryAddMenu('fullscreen');
 	
 	if (img) {
+		galeryFullscreen.addClass('simplery-fullscreen-active');
 		galeryFullscreen.find('ul').remove();
 		galeryFullscreen.find('header').remove();
 
 		galeryFullscreen.find('.simplery-menu').simpleryMenuActive(galery);
-		galeryFullscreen.append('<div class="simplery simplery-fullscreen-active"></div>');
+		galeryFullscreen.append('<div class="simplery-fullscreen-prev"></div>');
+		galeryFullscreen.append('<div class="simplery-fullscreen-actual"></div>');
+		galeryFullscreen.append('<div class="simplery-fullscreen-next"></div>');
+		galeryFullscreen.append('<div class="simplery-fullscreen-nav"></div>');
 
 		var li = img.parent().parent();
 
 		a = li.find("a");
 
 		var active = $('.simplery-fullscreen-active');
-		active.append('<img src="' + a.attr('href') + '" />');
+		//active.append('<img src="' + a.attr('href') + '" />');
 	}
 	else {
 		if (galery.data('simplery-rowlength-fullscreen')) {

@@ -172,8 +172,9 @@
 	overflow: scroll;
 
 	z-index:9991;
+	background:rgba(0,0,0,0.8);
 
-	background:rgba(0,0,0,0.9);
+	
 }
 .simplery-fullscreen header {
 	margin: 10px;
@@ -181,7 +182,35 @@
 .simplery-fullscreen .simplery-menu {
 	right: 20px;
 }
+
 .simplery-fullscreen-active {
+	overflow: hidden;
+}
+.simplery-fullscreen-active>* {
+	position: absolute;
+	background:rgba(0,0,0,1);
+}
+.simplery-fullscreen-prev {
+	height:50%;
+	width:25%;
+	left:0; 
+	margin-top:25%;
+}
+.simplery-fullscreen-active {
+	top:0; right:0; bottom:0; left:0;
+
+}
+.simplery-fullscreen-next {
+	height:50%;
+	width:25%;
+	right:0; 
+	margin-top:25%;
+}
+.simplery-fullscreen-nav {
+	height:25%;
+	width:50%;
+	left:25%; 
+	margin-top:75%;
 }
 
 
