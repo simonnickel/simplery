@@ -3,6 +3,8 @@
  	* SETTINGS
  	* TRIGGER
  	* TRIGGER
+ 	* LAYOUT
+ 	* FULLSCREEN
  	* FUNCTIONS
  *
  */
@@ -35,16 +37,24 @@ $(document).ready(function() {
 // when css+images are loaded
 $(window).load(function() {
 	
-	$(".simplery-box").each(function() {
+	var galery = $(".simplery-box");
+
+	// prepare box layout of galery
+	galery.each(function() {
 		$(this).simpleryBoxLayout();
 	});
 
-	$(".simplery-box li").hover(
+	// change links to toggle fullscreen
+	galery.simpleryInitClick(galery);
+
+	// set hover 
+	galery.find("li").hover(
 		function() {$(this).simpleryBoxImageHover(1);},
 		function() {$(this).simpleryBoxImageHover(0);}
 	);
 
 });
+
 
 // when window is resized
 $(window).resize(function() {
@@ -79,7 +89,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 
 /*
- * FUNCTIONS
+ * LAYOUT
  */
 
 // initial layout for the simplery box
@@ -102,7 +112,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	li.css("font-size", fontSize);
 
 	// add menu to header
-	galery.simpleryAddMenu('box');
+	galery.simpleryAddMenu('box', galery);
 	
 	galery.simpleryBoxSize();
 
@@ -118,18 +128,12 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 		galery.removeClass(rowlengthClass + i.toString());
 
 	var rowlength;
-	if (galery.width() < 3 * autoRowWidth)
-		rowlength = '3';
-	else if (galery.width() < 4 * autoRowWidth)
-		rowlength = '4';
-	else if (galery.width() < 5 * autoRowWidth)
-		rowlength = '5';
-	else if (galery.width() < 6 * autoRowWidth)
-		rowlength = '6';
-	else if (galery.width() < 7 * autoRowWidth)
-		rowlength = '7';
-	else if (galery.width() >= 7 * autoRowWidth)
-		rowlength = '8';
+	if 		(galery.width() < 3 * autoRowWidth) 	rowlength = '3';
+	else if (galery.width() < 4 * autoRowWidth) 	rowlength = '4';
+	else if (galery.width() < 5 * autoRowWidth) 	rowlength = '5';
+	else if (galery.width() < 6 * autoRowWidth) 	rowlength = '6';
+	else if (galery.width() < 7 * autoRowWidth) 	rowlength = '7';
+	else if (galery.width() >= 7 * autoRowWidth) 	rowlength = '8';
 
 	galery.addClass(rowlengthClass + rowlength.toString());
 
@@ -179,15 +183,15 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	return this;
 };})( jQuery );
 
-
 // add menu to galery
-(function( $ ){$.fn.simpleryAddMenu = function(mode) {
+(function( $ ){$.fn.simpleryAddMenu = function(mode, galerySrc) {
 	var galery = $(this);
 
+	var mode_icon = '';
 	if (mode == 'box')
-		mode = 'fa-resize-full'; // 'fa-resize-fullscreen', 'fa-move'
+		mode_icon = 'fa-resize-full'; // 'fa-resize-fullscreen', 'fa-move'
 	else if (mode == 'fullscreen')
-		mode = 'fa-resize-small';
+		mode_icon = 'fa-resize-small';
 
 	// grid = 'fa-th', 'fa-th-large'
 	// arrows = 'fa-chevron-left' (right, up), 'fa-chevron-circle-right', 'fa-angle-double-up', 'fa-angle-up', 'fa-caret-up'
@@ -197,14 +201,34 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	// help = 'fa-question', 'fa-question-circle'
 
 	galery.append('<div class="simplery-menu">'
-		+ '<i class="fa fa-th simplery-menu-grid"></i>'
-		+ '<i class="fa fa-info simplery-menu-info"></i>'
-		+ '<i class="fa '+ mode +' simplery-menu-fullscreen"></i>'
-		+ '<i class="fa fa-question-circle simplery-menu-help"></i>'
+		//+ '<i class="fa fa-info simplery-menu-info"></i>'
+		+ '<i class="fa '+ mode_icon +' simplery-menu-fullscreen"></i>'
+		//+ '<i class="fa fa-question-circle simplery-menu-help"></i>'
 		+ '</div>');
-	galery.find('.simplery-menu-fullscreen').each(function() {
+
+	var fullscreens = galery.find('.simplery-menu-fullscreen');
+
+	fullscreens.each(function() {
 		$(this).click(function() {
-			galery.simpleryToggleFullscreen();
+			if (mode == 'box')
+				galery.simpleryFullscreenStart();
+			else if (mode == 'fullscreen')
+				galery.simpleryFullscreenEnd();
+		})
+	});
+
+	return this;
+};})( jQuery );
+
+// modify menu to show items for single image view
+(function( $ ){$.fn.simpleryMenuActive = function(galery) {
+	var menu = $(this);
+	$('<i class="fa fa-th simplery-menu-grid"></i>').insertBefore(menu.find('.simplery-menu-fullscreen'));
+
+	menu.find('.simplery-menu-grid').each(function() {
+		$(this).click(function() {
+			galery.simpleryFullscreenEnd();
+			galery.simpleryFullscreenStart();
 		})
 	});
 
@@ -212,21 +236,44 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 };})( jQuery );
 
 
-// fullscreen
-(function( $ ){$.fn.simpleryToggleFullscreen = function() {
+/*
+ * FULLSCREEN
+ */
+
+// fullscreen end
+(function( $ ){$.fn.simpleryFullscreenEnd = function() {
+	var galeryFullscreen = $('.simplery-fullscreen');
+	galeryFullscreen.remove();
+
+	return this;
+};})( jQuery );
+
+// fullscreen start
+(function( $ ){$.fn.simpleryFullscreenStart = function(img) {
 	var body = $('body');
 	var galery = $(this);
 
-	if (galery.hasClass('simplery-fullscreen')) {
-		body.css('overflow','auto');
-		galery.remove();
+	body.css('overflow','hidden');
+	body.append('<div class="simplery simplery-fullscreen"></div>');	
+	var galeryFullscreen = $('.simplery-fullscreen');
+
+	galeryFullscreen.simpleryAddMenu('fullscreen');
+	
+	if (img) {
+		galeryFullscreen.find('ul').remove();
+		galeryFullscreen.find('header').remove();
+
+		galeryFullscreen.find('.simplery-menu').simpleryMenuActive(galery);
+		galeryFullscreen.append('<div class="simplery simplery-fullscreen-active"></div>');
+
+		var li = img.parent().parent();
+
+		a = li.find("a");
+
+		var active = $('.simplery-fullscreen-active');
+		active.append('<img src="' + a.attr('href') + '" />');
 	}
-	else if(galery.hasClass('simplery-box')) {
-		body.css('overflow','hidden');
-		body.append('<div class="simplery simplery-fullscreen"></div>');
-
-		var galeryFullscreen = $('.simplery-fullscreen');
-
+	else {
 		if (galery.data('simplery-rowlength-fullscreen')) {
 			var rowlength = galery.data('simplery-rowlength-fullscreen');
 			galeryFullscreen.addClass(rowlengthClass + rowlength);
@@ -236,9 +283,11 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 		}
 		
 		galeryFullscreen.append(galery.find('header').clone());
-		galeryFullscreen.simpleryAddMenu('fullscreen');
 		galeryFullscreen.append(galery.find('ul').clone());
 		galeryFullscreen.simpleryBoxSize();
+
+		// change links to toggle fullscreen
+		galeryFullscreen.simpleryInitClick(galery);
 
 		// add hover 
 		var li = galeryFullscreen.find('li');
@@ -249,6 +298,39 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 			);
 		});
 	}
+
+	return this;
+};})( jQuery );
+
+
+ /*
+ * FUNCTIONS
+ */
+
+// determine rowlength from class name
+(function( $ ){$.fn.simpleryGetRowlength = function(mouseIn) {
+	var galery = $(this);
+
+	var rowlength = 0;
+	for (var i = hoverZoom.length-1; i >= 1; i--)
+		if (galery.hasClass(rowlengthClass + i))
+			rowlength = i;
+
+	return rowlength;
+};})( jQuery );
+
+
+// change links to toggle fullscreen
+(function( $ ){$.fn.simpleryInitClick = function(galery) {
+	$(this).find("img").each(function() {
+		var img = $(this);
+		var a = img.parent();
+
+		a.click(function(e) {
+			e.preventDefault();
+			galery.simpleryFullscreenStart(img);
+		});
+	});
 
 	return this;
 };})( jQuery );
@@ -288,14 +370,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	return this;
 };})( jQuery );
 
-// determine rowlength from class name
-(function( $ ){$.fn.simpleryGetRowlength = function(mouseIn) {
-	var galery = $(this);
 
-	var rowlength = 0;
-	for (var i = hoverZoom.length-1; i >= 1; i--)
-		if (galery.hasClass(rowlengthClass + i))
-			rowlength = i;
 
-	return rowlength;
-};})( jQuery );
+
+

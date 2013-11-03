@@ -68,12 +68,22 @@
 	position: absolute;
 	top: 10px; right: 10px;
 	margin: 0!important;
+	padding-left:10px;
 	font-size: 1.1em;
+	background:rgba(0,0,0,0.5);
+	border-radius: 2px;	
 }
 .simplery-menu i {
 	cursor: pointer;
-	margin: 0 10px;
+	padding: 5px 10px 5px 0;
 }
+.simplery-box .simplery-menu {
+	z-index:9991;
+}
+.simplery-fullscreen .simplery-menu {
+	z-index:9992;
+}
+
 
 /* 
  * simplery-box 
@@ -92,7 +102,7 @@
 .simplery-box li:hover,
 .simplery-fullscreen li:hover {
 	overflow: visible;
-	z-index: 9999;
+	z-index: 9990;
 }
 
 .simplery-box.simplery-1 li,
@@ -161,14 +171,17 @@
 	height: 100%;
 	overflow: scroll;
 
-	background:rgba(0,0,0,0.9);
+	z-index:9991;
 
+	background:rgba(0,0,0,0.9);
 }
 .simplery-fullscreen header {
 	margin: 10px;
 }
 .simplery-fullscreen .simplery-menu {
 	right: 20px;
+}
+.simplery-fullscreen-active {
 }
 
 
