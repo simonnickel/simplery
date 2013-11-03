@@ -64,7 +64,7 @@ $(window).resize(function() {
 		if (galery.hasClass('simplery-box') 
 				&& (!galery.data('simplery-rowlength') 
 				|| galery.data('simplery-rowlength') == 'auto')
-			|| galery.hasClass('simplery-fullscreen')
+			|| galery.hasClass('simplery-fullscreen-grid')
 				&& (!galery.data('simplery-rowlength-fullscreen') 
 				|| galery.data('simplery-rowlength-fullscreen') == 'auto')
 		) {
@@ -72,9 +72,11 @@ $(window).resize(function() {
 		}
 	});
 
-	$(".simplery").each(function() {
+	$(".simplery-box, .simplery-fullscreen-grid").each(function() {
 		$(this).simpleryBoxSize();
 	});
+
+	$('.simplery-fullscreen-active img').simpleryFullscreenSingleSize();
 
 });
 
@@ -167,7 +169,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	var blockWidth = li.width();
 	var height = width;
-	var ratio = Math.round(img.width() / img.height() * 10) / 10;
+	var ratio = getImageRatio(img.width(), img.height());
 
 	if (ratio < 1) // portrait
 		height = width * 1 / ratio;
@@ -259,24 +261,11 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	galeryFullscreen.simpleryAddMenu('fullscreen');
 	
 	if (img) {
-		galeryFullscreen.addClass('simplery-fullscreen-active');
-		galeryFullscreen.find('ul').remove();
-		galeryFullscreen.find('header').remove();
-
-		galeryFullscreen.find('.simplery-menu').simpleryMenuActive(galery);
-		galeryFullscreen.append('<div class="simplery-fullscreen-prev"></div>');
-		galeryFullscreen.append('<div class="simplery-fullscreen-actual"></div>');
-		galeryFullscreen.append('<div class="simplery-fullscreen-next"></div>');
-		galeryFullscreen.append('<div class="simplery-fullscreen-nav"></div>');
-
-		var li = img.parent().parent();
-
-		a = li.find("a");
-
-		var active = $('.simplery-fullscreen-active');
-		//active.append('<img src="' + a.attr('href') + '" />');
+		galeryFullscreen.simpleryFullscreenSingleInit(galery);
+		galeryFullscreen.simpleryFullscreenSingleShow(img);
 	}
 	else {
+		galeryFullscreen.addClass('simplery-fullscreen-grid');
 		if (galery.data('simplery-rowlength-fullscreen')) {
 			var rowlength = galery.data('simplery-rowlength-fullscreen');
 			galeryFullscreen.addClass(rowlengthClass + rowlength);
@@ -305,10 +294,78 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	return this;
 };})( jQuery );
 
+// fullscreen init single view
+(function( $ ){$.fn.simpleryFullscreenSingleInit = function(galery) {
+	var galeryFullscreen = $(this);
+
+	galeryFullscreen.addClass('simplery-fullscreen-single');
+	galeryFullscreen.find('ul').remove();
+	galeryFullscreen.find('header').remove();
+
+	galeryFullscreen.find('.simplery-menu').simpleryMenuActive(galery);
+	galeryFullscreen.append('<div class="simplery-fullscreen-active"></div>');
+	galeryFullscreen.append('<div class="simplery-fullscreen-prev"></div>');
+	galeryFullscreen.append('<div class="simplery-fullscreen-next"></div>');
+	galeryFullscreen.append('<div class="simplery-fullscreen-nav"></div>');
+
+	return this;
+};})( jQuery );
+
+// fullscreen init single view
+(function( $ ){$.fn.simpleryFullscreenSingleShow = function(img) {
+	var galeryFullscreen = $(this);
+	var li = img.parent().parent();
+	var active = $('.simplery-fullscreen-active');
+
+	a = li.find("a");
+	active.append('<img src="' + a.attr('href') + '" />');
+
+	var img = active.find('img');
+
+	img.load(function() {
+		img.simpleryFullscreenSingleSize();
+	});
+
+	return this;
+};})( jQuery );
+
+// fullscreen single view image size
+(function( $ ){$.fn.simpleryFullscreenSingleSize = function() {
+	var img = $(this);
+	var active = $('.simplery-fullscreen-active');
+
+	var ratioImg = getImageRatio(img.width(), img.height());
+	var ratioBox = getImageRatio(active.width(), active.height());
+
+	if (ratioImg > ratioBox) {
+		img.width(active.width());
+		if (img.height() > active.height()) {
+			img.height(active.height());
+			img.width(active.height() * ratioImg);
+		}
+	}
+	else {
+		img.height(active.height());
+		if (img.width() > active.width()) {
+			img.width(active.width());
+			img.height(active.width() * ratioImg);
+		}
+	}
+
+	// center vertical
+	if (img.height() < active.height())
+		img.css('top', (active.height() - img.height()) / 2);
+
+	return this;
+};})( jQuery );
+
 
  /*
  * FUNCTIONS
  */
+function getImageRatio(width, height) {
+	return Math.round(width / height * 10) / 10;
+}
 
 // determine rowlength from class name
 (function( $ ){$.fn.simpleryGetRowlength = function(mouseIn) {
