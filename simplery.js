@@ -242,6 +242,9 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 // fullscreen end
 (function( $ ){$.fn.simpleryFullscreenEnd = function() {
+	var body = $('body');
+	body.css('overflow','auto');
+
 	var galeryFullscreen = $('.simplery-fullscreen');
 	galeryFullscreen.remove();
 
@@ -250,10 +253,10 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 // fullscreen start
 (function( $ ){$.fn.simpleryFullscreenStart = function(img) {
-	var body = $('body');
 	var galery = $(this);
 	galery.simpleryFullscreenEnd();
 
+	var body = $('body');
 	body.css('overflow','hidden');
 	body.append('<div class="simplery simplery-fullscreen"></div>');	
 	var galeryFullscreen = $('.simplery-fullscreen');
@@ -261,7 +264,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	galeryFullscreen.simpleryAddMenu('fullscreen');
 	
 	if (img) {
-		galeryFullscreen.simpleryFullscreenSingleInit(galery);
+		galeryFullscreen.simpleryFullscreenSingleInit(galery, img);
 		galeryFullscreen.simpleryFullscreenSingleShow(img);
 	}
 	else {
@@ -295,7 +298,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 };})( jQuery );
 
 // fullscreen init single view
-(function( $ ){$.fn.simpleryFullscreenSingleInit = function(galery) {
+(function( $ ){$.fn.simpleryFullscreenSingleInit = function(galery, img) {
 	var galeryFullscreen = $(this);
 
 	galeryFullscreen.addClass('simplery-fullscreen-single');
@@ -304,8 +307,8 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	galeryFullscreen.find('.simplery-menu').simpleryMenuActive(galery);
 	galeryFullscreen.append('<div class="simplery-fullscreen-active"></div>');
-	galeryFullscreen.append('<div class="simplery-fullscreen-prev"><i class="fa fa-angle-left"></i></div>');
-	galeryFullscreen.append('<div class="simplery-fullscreen-next"><i class="fa fa-angle-right"></i></div>');
+	galeryFullscreen.append('<div class="simplery-fullscreen-prev"><div></div><i class="fa fa-angle-left"></i></div>');
+	galeryFullscreen.append('<div class="simplery-fullscreen-next"><div></div><i class="fa fa-angle-right"></i></div>');
 	galeryFullscreen.append('<div class="simplery-fullscreen-nav"></div>');
 
 	return this;
@@ -318,27 +321,31 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	// active
 	var active = $('.simplery-fullscreen-active');
+	active.empty();
 	a = li.find("a");
 	active.append('<img src="' + a.attr('href') + '" />');
 
-	var img = active.find('img');
+	var activeImg = active.find('img');
 
-	img.load(function() {
-		img.simpleryFullscreenSingleSize();
+	activeImg.load(function() {
+		activeImg.simpleryFullscreenSingleSize();
 	});
 
 	// prev
-	var previous = $('.simplery-fullscreen-prev');
+	var prev = $('.simplery-fullscreen-prev');
+	var prevImg = li.prev().find('img');
+	//prev.find('div').empty().prepend('<img src="' + prevImg.attr('src') + '" />');
+	prev.click(function(e) {
+		galeryFullscreen.simpleryFullscreenSingleShow(prevImg);
+	});
 	
-
-
-
-	/*
-	var prevLi = li.prev();
-	a = li.find("a");
-	active.append('<img src="' + a.attr('href') + '" />');
-	*/
-
+	// next
+	var next = $('.simplery-fullscreen-next');
+	var nextImg = li.next().find('img');
+	//next.find('div').empty().prepend('<img src="' + nextImg.attr('src') + '" />');
+	next.click(function(e) {
+		galeryFullscreen.simpleryFullscreenSingleShow(nextImg);
+	});
 
 	return this;
 };})( jQuery );
