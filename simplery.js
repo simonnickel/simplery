@@ -304,8 +304,8 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	galeryFullscreen.find('.simplery-menu').simpleryMenuActive(galery);
 	galeryFullscreen.append('<div class="simplery-fullscreen-active"></div>');
-	galeryFullscreen.append('<div class="simplery-fullscreen-prev"></div>');
-	galeryFullscreen.append('<div class="simplery-fullscreen-next"></div>');
+	galeryFullscreen.append('<div class="simplery-fullscreen-prev"><i class="fa fa-angle-left"></i></div>');
+	galeryFullscreen.append('<div class="simplery-fullscreen-next"><i class="fa fa-angle-right"></i></div>');
 	galeryFullscreen.append('<div class="simplery-fullscreen-nav"></div>');
 
 	return this;
@@ -315,8 +315,9 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 (function( $ ){$.fn.simpleryFullscreenSingleShow = function(img) {
 	var galeryFullscreen = $(this);
 	var li = img.parent().parent();
-	var active = $('.simplery-fullscreen-active');
 
+	// active
+	var active = $('.simplery-fullscreen-active');
 	a = li.find("a");
 	active.append('<img src="' + a.attr('href') + '" />');
 
@@ -325,6 +326,19 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	img.load(function() {
 		img.simpleryFullscreenSingleSize();
 	});
+
+	// prev
+	var previous = $('.simplery-fullscreen-prev');
+	
+
+
+
+	/*
+	var prevLi = li.prev();
+	a = li.find("a");
+	active.append('<img src="' + a.attr('href') + '" />');
+	*/
+
 
 	return this;
 };})( jQuery );
@@ -352,7 +366,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 		}
 	}
 
-	// center vertical
+	// vertical center
 	if (img.height() < active.height())
 		img.css('top', (active.height() - img.height()) / 2);
 
