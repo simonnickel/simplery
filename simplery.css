@@ -197,8 +197,7 @@
 }
 .simplery-fullscreen-single *:hover>i {
 
-	border-radius:30px;
-	background:rgba(0,0,0,0.5);
+	background:rgba(0,0,0,1);
 
 	opacity: 1;
 
@@ -231,9 +230,12 @@
 	font-size: 60px;
 	width: 30px;
 	padding: 0 15px;
+	border-radius:30px;
+	background:rgba(0,0,0,0.3);
 
-
-	opacity: 0.3;
+	-webkit-transition: background 1s, opacity 1s;
+	transition: background 1s, opacity 1s;
+	opacity: 0.2;
 }
 .simplery-fullscreen-prev i {left: 10%;}
 .simplery-fullscreen-next i {right: 10%; padding: 0 8px 0 22px;
