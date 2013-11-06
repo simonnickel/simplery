@@ -36,6 +36,9 @@
 .simplery-nojs.simplery-6 li { width: 16%; }
 .simplery-nojs.simplery-7 li { width: 14%; }
 .simplery-nojs.simplery-8 li { width: 12%; }
+.simplery-nojs.simplery-9 li { width: 11%; }
+.simplery-nojs.simplery-10 li { width: 9.5%; }
+.simplery-nojs.simplery-11 li { width: 8.5%; }
 .simplery-nojs li>* {
 	width:100%;
 }
@@ -85,6 +88,10 @@
 }
 .simplery-fullscreen .simplery-menu {
 	z-index:9992;
+}
+.simplery-inactive {
+	opacity: 0;
+	cursor: default!important;
 }
 
 
@@ -140,6 +147,18 @@
 .simplery-fullscreen.simplery-8 li {
 	width: 12.5%;
 }
+.simplery-box.simplery-9 li,
+.simplery-fullscreen.simplery-9 li {
+	width: 11.111%;
+}
+.simplery-box.simplery-10 li,
+.simplery-fullscreen.simplery-10 li {
+	width: 10%;
+}
+.simplery-box.simplery-11 li,
+.simplery-fullscreen.simplery-11 li {
+	width: 9%;
+}
 
 .simplery-box img,
 .simplery-fullscreen-grid img {
@@ -150,7 +169,7 @@
 }
 .simplery-box li:hover img,
 .simplery-fullscreen li:hover img {
-	position: absolute; top:0; left:0;
+	position: absolute;
 	box-shadow: 0px 0px 15px 5px #111;
 	border-radius: 2px;
 }
@@ -188,23 +207,20 @@
 	margin: 10px;
 }
 
-
 .simplery-fullscreen-single {
 	overflow: hidden;
 }
 .simplery-fullscreen-single>* {
 	position: absolute;
 }
-.simplery-fullscreen-single *:hover>i {
-
+.simplery-fullscreen-single .simplery-fullscreen-prev:hover i,
+.simplery-fullscreen-single .simplery-fullscreen-next:hover i {
 	background:rgba(0,0,0,1);
-
 	opacity: 1;
-
 }
 
 .simplery-fullscreen-active {
-	top:10px; right:10px; bottom:10px; left:10px;
+	top:10px; right:10px; bottom:50px; left:10px;
 	text-align:center;
 	overflow:hidden;
 }
@@ -236,38 +252,62 @@
 
 	-webkit-transition: background 1s, opacity 1s;
 	transition: background 1s, opacity 1s;
-	opacity: 0;
 
+	opacity: 0;
+/*
 	-webkit-animation: fadein 1.5s;
 	-moz-animation: fadein 1.5s;
 	-ms-animation: fadein 1.5s;
 	-o-animation: fadein 1.5s;
 	animation: fadein 1.5s;
+*/
 }
 .simplery-fullscreen-prev i { left: 10%; }
 .simplery-fullscreen-next i { right: 10%; padding: 0 8px 0 22px; }
 
-@keyframes fadein {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-@-moz-keyframes fadein {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-@-webkit-keyframes fadein {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-@-ms-keyframes fadein {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}​
-
 .simplery-fullscreen-nav {
-	height:10%; width:100%;
-	bottom:0;
+	width: 100%; height: auto;
+	bottom: 0; top: auto;
+	text-align: center;
+	background:none;
 }
+.simplery-fullscreen-nav ul {
+	position: absolute;
+	top: 60%;
+	-webkit-transition: top 0.5s;
+	transition: top 0.5s;
+	background:rgba(0,0,0,0.8);
+}
+.simplery-fullscreen-nav:hover ul {
+	top: 3px;
+}
+.simplery-fullscreen-nav li {
+	-webkit-transition: opacity 0.5s;
+	transition: opacity 0.5s;
+	opacity: 0.5;
+}
+.simplery-fullscreen-nav li.active {
+	opacity: 1;
+	box-shadow: 0px 5px 5px 5px #000;
+	z-index:9995;
+	top: -3px;
+	border-radius: 2px;
+}
+.simplery-fullscreen-nav li:hover {
+	overflow: hidden;
+	opacity:1;
+}
+.simplery-fullscreen-nav img {
+	position: relative;
+	top: 0; left: 0;
+}
+.simplery-fullscreen-nav li:hover img {
+	box-shadow: 0px 0px 0px 0px #111;
+	border-radius: 0px;
+}
+
+
+
 
 /* prev, next preview animations */
 .simplery-fullscreen-prev div,
@@ -293,17 +333,20 @@
 .simplery-fullscreen-prev:hover img {right:0;}
 .simplery-fullscreen-next:hover img {left:0;}
 
-/*
-.simplery-fullscreen-single>* {
-	background:rgba(0,0,0,0.5);
+
+@keyframes fadein {
+    from { opacity: 1; }
+    to   { opacity: 0; }
 }
-.simplery-fullscreen-single>*:hover {
-	background:rgba(0,0,0,4);
+@-moz-keyframes fadein {
+    from { opacity: 1; }
+    to   { opacity: 0; }
 }
-.simplery-fullscreen-active {
-	background:rgba(0,0,0,0.1);
+@-webkit-keyframes fadein {
+    from { opacity: 1; }
+    to   { opacity: 0; }
 }
-.simplery-fullscreen-active:hover {
-	background:rgba(0,0,0,0.3);
-}
-*/
+@-ms-keyframes fadein {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}​
