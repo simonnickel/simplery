@@ -21,6 +21,10 @@ var hover_offset_border = 10;
 var rowlengthClass = 'simplery-';
 var autoRowWidth = 200;
 
+var activeGalery = '';
+var nextImage;
+var prevImage;
+
 
 /*
  * TRIGGER
@@ -48,7 +52,7 @@ $(window).load(function() {
 	});
 
 	// change links to toggle fullscreen
-	galery.simpleryInitClick(galery);
+	galery.simpleryInitClick();
 
 	// set hover 
 	galery.find("li").hover(
@@ -56,6 +60,25 @@ $(window).load(function() {
 		function() {$(this).simpleryBoxImageHover(0);}
 	);
 
+});
+
+// register shortcuts, for codes see: http://www.mediaevent.de/javascript/Extras-Javascript-Keycodes.html
+$(document).keydown(function(e){
+	var galeryFullscreen = $('.simplery-fullscreen');
+
+	if ((e.which) == 27) // escape
+		galeryFullscreen.simpleryFullscreenEnd(); 
+
+	if ((e.which) == 37) // left arrow
+		if (prevImage.attr('src') != '')
+			galeryFullscreen.simpleryFullscreenStart(prevImage); 
+
+	if ((e.which) == 39) // right arrow
+		if (nextImage.attr('src') != '')
+			galeryFullscreen.simpleryFullscreenStart(nextImage); 
+
+	if ((e.which) == 71) // g
+		activeGalery.simpleryFullscreenStart(); 
 });
 
 
@@ -231,13 +254,13 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 		//+ '<i class="fa fa-question-circle simplery-menu-help"></i>'
 		+ '</div>');
 
-	var fullscreens = galery.find('.simplery-menu-fullscreen');
-
-	fullscreens.each(function() {
+	galery.find('.simplery-menu-fullscreen').each(function() {
 		$(this).click(function() {
-			galery.simpleryFullscreenEnd();
 			if (mode == 'box')
-				galery.simpleryFullscreenStart();				
+				galery.simpleryFullscreenStart();
+			else
+				galery.simpleryFullscreenEnd();
+							
 		})
 	});
 
@@ -245,13 +268,13 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 };})( jQuery );
 
 // modify menu to show items for single image view
-(function( $ ){$.fn.simpleryMenuActive = function(galery) {
+(function( $ ){$.fn.simpleryMenuActive = function() {
 	var menu = $(this);
 	$('<i class="fa fa-th simplery-menu-grid"></i>').insertBefore(menu.find('.simplery-menu-fullscreen'));
 
 	menu.find('.simplery-menu-grid').each(function() {
 		$(this).click(function() {
-			galery.simpleryFullscreenStart();
+			activeGalery.simpleryFullscreenStart();
 		})
 	});
 
@@ -269,16 +292,18 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	var body = $('body');
 	body.css('overflow','auto');
 
-	var galeryFullscreen = $('.simplery-fullscreen');
-	galeryFullscreen.remove();
+	$('.simplery-fullscreen').remove();
+	activeGalery = '';
 
 	return this;
 };})( jQuery );
 
 // fullscreen start
-(function( $ ){$.fn.simpleryFullscreenStart = function(img) {
-	var galery = $(this);
-	galery.simpleryFullscreenEnd();
+(function( $ ){$.fn.simpleryFullscreenStart = function(single) {
+	if (activeGalery == '')
+		activeGalery = $(this);
+	$('.simplery-fullscreen-grid').remove();
+	$('.simplery-fullscreen-single').remove();
 
 	var body = $('body');
 	body.css('overflow','hidden');
@@ -287,49 +312,58 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	galeryFullscreen.simpleryAddMenu('fullscreen');
 	
-	if (img) {
-		galeryFullscreen.simpleryFullscreenSingleInit(galery, img);
-		galery.simpleryFullscreenSingleView(img);
+	if (single) {
+		galeryFullscreen.simpleryFullscreenSingleInit();
+		activeGalery.simpleryFullscreenSingleView(single);
 	}
 	else {
-		galeryFullscreen.addClass('simplery-fullscreen-grid');
-		if (galery.data('simplery-rowlength-fullscreen')) {
-			var rowlength = galery.data('simplery-rowlength-fullscreen');
-			galeryFullscreen.addClass(rowlengthClass + rowlength);
-		}
-		else {
-			galeryFullscreen.simpleryAutoRowlength();
-		}
-		
-		galeryFullscreen.append(galery.find('header').clone());
-		galeryFullscreen.append(galery.find('ul').clone());
-		galeryFullscreen.simpleryBoxSize();
-
-		// change links to toggle fullscreen
-		galeryFullscreen.simpleryInitClick(galery);
-
-		// add hover 
-		var li = galeryFullscreen.find('li');
-		li.each(function() {
-			$(this).hover(
-				function() {$(this).simpleryBoxImageHover(1);},
-				function() {$(this).simpleryBoxImageHover(0);}
-			);
-		});
+		galeryFullscreen.simpleryFullscreenGridInit();
 	}
 
 	return this;
 };})( jQuery );
 
+// fullscreen grid single view
+(function( $ ){$.fn.simpleryFullscreenGridInit = function() {
+	var galeryFullscreen = $(this);
+
+	galeryFullscreen.addClass('simplery-fullscreen-grid');
+	if (activeGalery.data('simplery-rowlength-fullscreen')) {
+		var rowlength = activeGalery.data('simplery-rowlength-fullscreen');
+		galeryFullscreen.addClass(rowlengthClass + rowlength);
+	}
+	else {
+		galeryFullscreen.simpleryAutoRowlength();
+	}
+	
+	galeryFullscreen.append(activeGalery.find('header').clone());
+	galeryFullscreen.append(activeGalery.find('ul').clone());
+	galeryFullscreen.simpleryBoxSize();
+
+	// change links to toggle fullscreen
+	galeryFullscreen.simpleryInitClick();
+
+	// add hover 
+	var li = galeryFullscreen.find('li');
+	li.each(function() {
+		$(this).hover(
+			function() {$(this).simpleryBoxImageHover(1);},
+			function() {$(this).simpleryBoxImageHover(0);}
+		);
+	});
+
+	return this;
+};})( jQuery );
+
 // fullscreen init single view
-(function( $ ){$.fn.simpleryFullscreenSingleInit = function(galery) {
+(function( $ ){$.fn.simpleryFullscreenSingleInit = function() {
 	var galeryFullscreen = $(this);
 
 	galeryFullscreen.addClass('simplery-fullscreen-single');
 	galeryFullscreen.find('ul').remove();
 	galeryFullscreen.find('header').remove();
 
-	galeryFullscreen.find('.simplery-menu').simpleryMenuActive(galery);
+	galeryFullscreen.find('.simplery-menu').simpleryMenuActive();
 	galeryFullscreen.append('<div class="simplery-fullscreen-active"></div>');
 	galeryFullscreen.append('<div class="simplery-fullscreen-prev"><div></div><i class="fa fa-angle-left"></i></div>');
 	galeryFullscreen.append('<div class="simplery-fullscreen-next"><div></div><i class="fa fa-angle-right"></i></div>');
@@ -339,9 +373,8 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	return this;
 };})( jQuery );
 
-// fullscreen init single view
+// fullscreen view single image
 (function( $ ){$.fn.simpleryFullscreenSingleView = function(img) {
-	var galery = $(this);
 	var li = img.parent().parent();
 
 	// active
@@ -358,16 +391,18 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	var nextImages = new Array();
 	nextImages.push(img.simpleryGetNextImage('next'));//li.next().find('img');
-
+	nextImage = nextImages[0];
+	
 	var prevImages = new Array();
 	prevImages.push(img.simpleryGetNextImage('prev'));//li.prev().find('img');
+	prevImage = prevImages[0];
 
 	// next
 	var next = $('.simplery-fullscreen-next');
-	if (nextImages[0].attr('src') != '') {
+	if (nextImage.attr('src') != '') {
 		//next.find('div').empty().prepend('<img src="' + nextImg.attr('src') + '" />');
 		next.click(function(e) {
-			galery.simpleryFullscreenStart(nextImages[0]);
+			activeGalery.simpleryFullscreenStart(nextImage);
 		});
 	}
 	else {
@@ -376,10 +411,10 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	// prev
 	var prev = $('.simplery-fullscreen-prev');
-	if (prevImages[0].attr('src') != '') {
+	if (prevImage.attr('src') != '') {
 		//prev.find('div').empty().prepend('<img src="' + prevImg.attr('src') + '" />');
 		prev.click(function(e) {
-			galery.simpleryFullscreenStart(prevImages[0]);
+			activeGalery.simpleryFullscreenStart(prevImage);
 		});		
 	}
 	else {
@@ -398,14 +433,14 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	var a = newLi.find('a');
 	a.append(img.clone());
 	ul.append(newLi);
-	a.setClick(galery, img);
+	a.setClick(img);
 
 	for (var i = 0; i < sidelength; i++) {
 		var nextLi = $('<li><a href=""></a></li>');
 		var nextA = nextLi.find('a');
 		nextA.append(nextImages[i].clone());
 		ul.append(nextLi);
-		nextA.setClick(galery, nextImages[i]);
+		nextA.setClick(nextImages[i]);
 
 		nextImages.push(nextImages[i].simpleryGetNextImage('next'));
 
@@ -413,7 +448,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 		var prevA = prevLi.find('a');
 		prevA.append(prevImages[i].clone());
 		ul.prepend(prevLi);
-		prevA.setClick(galery, prevImages[i]);
+		prevA.setClick(prevImages[i]);
 
 		prevImages.push(prevImages[i].simpleryGetNextImage('prev'));
 	}
@@ -425,10 +460,10 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 };})( jQuery );
 
 // set click outisde of loop to prevent closures
-(function( $ ){$.fn.setClick = function(galery, img) {
+(function( $ ){$.fn.setClick = function(img) {
 	$(this).click(function(e) {
 		e.preventDefault();
-		galery.simpleryFullscreenStart(img);
+		activeGalery.simpleryFullscreenStart(img);
 	});
 };})( jQuery );
 
@@ -500,8 +535,9 @@ function getImageRatio(width, height) {
 
 
 // change links to toggle fullscreen
-(function( $ ){$.fn.simpleryInitClick = function(galery) {
-	$(this).find("img").each(function() {
+(function( $ ){$.fn.simpleryInitClick = function() {
+	var galery = $(this);
+	galery.find("img").each(function() {
 		var img = $(this);
 		var a = img.parent();
 
