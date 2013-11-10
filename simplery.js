@@ -323,7 +323,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	if (single) {
 		isFullscreen = 2;
 		galeryFull.simpleryFullscreenSingleInit();
-		activeGalery.simpleryFullscreenSingleView(single);
+		single.simpleryFullscreenSingleView();
 	}
 	else {
 		isFullscreen = 1;
@@ -384,54 +384,51 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 };})( jQuery );
 
 // fullscreen view single image
-(function( $ ){$.fn.simpleryFullscreenSingleView = function(img) {
+(function( $ ){$.fn.simpleryFullscreenSingleView = function() {
+	var img = $(this);
 	var li = img.parent().parent();
 
 	// active
 	var active = $('.simplery-fullscreen-active');
-	active.empty();
-	a = img.parent();
-	active.append('<img src="' + a.attr('href') + '" />');
-
+	active.append('<img src="' + img.parent().attr('href') + '" />');
 	var activeImg = active.find('img');
-
 	activeImg.load(function() {
 		activeImg.simpleryFullscreenSingleSize();
 	});
 
-	var nextImages = new Array();
-	nextImages.push(img.simpleryGetNextImage('next'));//li.next().find('img');
-	nextImage = nextImages[0];
-	
-	var prevImages = new Array();
-	prevImages.push(img.simpleryGetNextImage('prev'));//li.prev().find('img');
-	prevImage = prevImages[0];
-
 	// next
 	var next = $('.simplery-fullscreen-next');
+	nextImage = img.simpleryGetNextImage('next');
 	if (nextImage.attr('src') != '') {
 		//next.find('div').empty().prepend('<img src="' + nextImg.attr('src') + '" />');
 		next.click(function(e) {
 			activeGalery.simpleryFullscreenStart(nextImage);
 		});
 	}
-	else {
+	else
 		next.addClass('simplery-inactive');
-	}
 
 	// prev
 	var prev = $('.simplery-fullscreen-prev');
+	prevImage = img.simpleryGetNextImage('prev');
 	if (prevImage.attr('src') != '') {
 		//prev.find('div').empty().prepend('<img src="' + prevImg.attr('src') + '" />');
 		prev.click(function(e) {
 			activeGalery.simpleryFullscreenStart(prevImage);
 		});		
 	}
-	else {
+	else
 		prev.addClass('simplery-inactive');
-	}
 
 	// nav
+	img.simpleryFullscreenSingleViewNav();
+
+	return this;
+};})( jQuery );
+
+// fullscreen single view set nav
+(function( $ ){$.fn.simpleryFullscreenSingleViewNav = function() {
+	var img = $(this);
 	var nav = $('.simplery-fullscreen-nav');
 	nav.empty();
 	var rowlength = nav.simpleryAutoRowlength(true);
@@ -444,6 +441,12 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	a.append(img.clone());
 	ul.append(newLi);
 	a.setClick(img);
+
+	var nextImages = new Array();
+	nextImages.push(img.simpleryGetNextImage('next'));//li.next().find('img');
+	
+	var prevImages = new Array();
+	prevImages.push(img.simpleryGetNextImage('prev'));//li.prev().find('img');
 
 	for (var i = 0; i < sidelength; i++) {
 		var nextLi = $('<li><a href=""></a></li>');
@@ -475,6 +478,8 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 		e.preventDefault();
 		activeGalery.simpleryFullscreenStart(img);
 	});
+
+	return this;
 };})( jQuery );
 
 // fullscreen single view image size
