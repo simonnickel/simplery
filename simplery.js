@@ -53,7 +53,9 @@ $(window).load(function() {
 	});
 
 	// change links to toggle fullscreen
-	galery.simpleryInitClick();
+	galery.each(function() {
+		$(this).simpleryInitClick();
+	});
 
 	// set hover 
 	galery.find("li").hover(
@@ -299,6 +301,8 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	$('.simplery-fullscreen').remove();
 	activeGalery = null;
 	isFullscreen = 0;
+	nextImage = null
+	prevImage = null
 
 	return this;
 };})( jQuery );
