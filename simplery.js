@@ -276,7 +276,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 };})( jQuery );
 
 // fullscreen start
-(function( $ ){$.fn.simpleryFullscreenStart = function() {
+(function( $ ){$.fn.simpleryFullscreenStart = function(img) {
 	var galery = $(this);
 	galery.simpleryFullscreenEnd();
 
@@ -420,12 +420,6 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	nav.append(ul);
 	nav.simpleryBoxLayout(true);
-
-	// fix width rounding bug, dont know why this works ... 
-	var blockWidth = ul.find('li').width();
-	ul.find('li').each(function() {
-		$(this).width(blockWidth);
-	});
 
 	return this;
 };})( jQuery );
