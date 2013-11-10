@@ -69,10 +69,18 @@ $(window).load(function() {
 $(document).keydown(function(e){
 	var galeryFull = $('.simplery-fullscreen');
 
-	if (isFullscreen != 0) {
-		if ((e.which) == 27) // escape
+	var help = galeryFull.find('.simplery-help');
+	if (help.is('div')) {
+		if (e.which == 27) // escape
+			galeryFull.simpleryHelp();
+	}
+	else if (isFullscreen != 0) {
+		if (e.which == 27) // escape
 			galeryFull.simpleryFullscreenEnd(); 
 	}
+
+
+
 	if (isFullscreen == 2) {
 		if ((e.which) == 37) // left arrow
 			if (prevImage.attr('src') != '')
@@ -241,12 +249,6 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 (function( $ ){$.fn.simpleryAddMenu = function(mode, galerySrc) {
 	var galery = $(this);
 
-	var mode_icon = '';
-	if (mode == 'box')
-		mode_icon = 'fa-resize-full'; // 'fa-resize-fullscreen', 'fa-move'
-	else if (mode == 'fullscreen')
-		mode_icon = 'fa-resize-small';
-
 	// grid = 'fa-th', 'fa-th-large'
 	// arrows = 'fa-chevron-left' (right, up), 'fa-chevron-circle-right', 'fa-angle-double-up', 'fa-angle-up', 'fa-caret-up'
 	// play = 'fa-play', 'fa-play-circle', 'fa-youtube-play', 'fa-caret-square-o-right'
@@ -254,10 +256,18 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	// description = 'fa-align-justify', 'fa-reorder'
 	// help = 'fa-question', 'fa-question-circle'
 
+
+	var mode_icon = '';
+	if (mode == 'box')
+		mode_icon = 'fa-resize-full'; // 'fa-resize-fullscreen', 'fa-move'
+	else if (mode == 'fullscreen')
+		mode_icon = 'fa-resize-small';
+
 	galery.append('<div class="simplery-menu">'
 		//+ '<i class="fa fa-info simplery-menu-info"></i>'
 		+ '<i class="fa '+ mode_icon +' simplery-menu-fullscreen"></i>'
 		//+ '<i class="fa fa-question-circle simplery-menu-help"></i>'
+		+ '<i class="fa fa-question-circle simplery-menu-help"></i>'
 		+ '</div>');
 
 	galery.find('.simplery-menu-fullscreen').each(function() {
@@ -265,8 +275,12 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 			if (mode == 'box')
 				galery.simpleryFullscreenStart();
 			else
-				galery.simpleryFullscreenEnd();
-							
+				galery.simpleryFullscreenEnd();			
+		})
+	});
+	galery.find('.simplery-menu-help').each(function() {
+		$(this).click(function() {
+			galery.simpleryHelp();			
 		})
 	});
 
@@ -565,6 +579,30 @@ function getImageRatio(width, height) {
 	return this;
 };})( jQuery );
 
+// change links to toggle fullscreen
+(function( $ ){$.fn.simpleryHelp = function() {
+	var galery = $(this);
+	var help = galery.find('.simplery-help');
+	if (help.is('div'))
+		help.remove();
+	else
+		galery.append('<div class="simplery-help"><table>'
+			+ '<tr><td class="simplery-help-close" colspan="2"><a href="">close</a></td></tr>'
+			+ '<tr><td class="simplery-help-key"><span>ESC</span></td> <td>Quit Galery</td></tr>'
+			+ '<tr><td class="simplery-help-key"><span>&larr;</span></td> <td>Previous Image</td></tr>'
+			+ '<tr><td class="simplery-help-key"><span>&rarr;</span></td> <td>Next Image</td></tr>'
+			+ '<tr><td class="simplery-help-key"><span>G</span></td> <td>Switch to Grid View</td></tr>'
+			+ '<tr><td class="simplery-help-info" colspan="2"><a href="http://simonnickel.de/devlog/projekte/simplery">simplery</a> by <a href="http://simonnickel.de">Simon Nickel</a> | GitHub</td></tr>'
+			+ '</ul></div>');
+
+	help = galery.find('.simplery-help');
+	help.find('.simplery-help-close a').click(function(e) {
+			e.preventDefault();
+			help.remove();
+		});
+
+	return this;
+};})( jQuery );
 
 // hover
 (function( $ ){$.fn.simpleryBoxImageHover = function(mouseIn) {

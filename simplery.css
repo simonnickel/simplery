@@ -4,6 +4,7 @@
 	* general 
 	* simplery-box
 	* simplery-fullscreen
+	* simplery-help
  *
  */
 
@@ -72,16 +73,17 @@
 }
 .simplery-menu {
 	position: absolute;
-	top: 10px; right: 10px;
+	top: 5px; right: 5px;
 	margin: 0!important;
 	padding-left:10px;
-	font-size: 1.1em;
+	padding-right:10px;
+	font-size: 18px;
 	background:rgba(0,0,0,0.5);
 	border-radius: 2px;	
 }
 .simplery-menu i {
 	cursor: pointer;
-	padding: 5px 10px 5px 0;
+	padding: 5px 10px;
 }
 .simplery-box .simplery-menu {
 	z-index:9991;
@@ -306,6 +308,55 @@
 
 }
 
+
+/* 
+ * simplery-help 
+ */
+
+.simplery .simplery-help {
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
+	margin: 0 !important;
+
+	border-radius: 2px;
+	background:rgba(255,255,255,0.2);
+}
+.simplery .simplery-help table {
+	position: absolute;
+	width: 300px;
+	padding: 10px;
+	left: 50%;
+	margin-left: -155px !important;
+
+	top:20%;
+	background:rgba(0,0,0,0.8);
+	border-radius: 5px;
+}
+.simplery .simplery-help td {
+	padding: 10px;
+	text-align: left;
+}
+.simplery .simplery-help td.simplery-help-key span {
+	display: inline-block;
+	width: 50px;
+	padding: 15px 0;
+	text-align: center;
+
+	border-radius: 4px;
+	color: #000;
+	font-size:20px;
+	background:rgba(255,255,255,0.8);
+	box-shadow: 3px 3px 0px 0px rgba(255,255,255,0.6);
+}
+.simplery .simplery-help td.simplery-help-close {
+	text-align: right;
+	padding: 0;
+}
+.simplery .simplery-help td.simplery-help-info {
+	padding-top:20px;
+	font-size: 12px;
+	text-align: center;
+}
 
 
 
