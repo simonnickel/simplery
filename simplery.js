@@ -79,8 +79,6 @@ $(document).keydown(function(e){
 			galeryFull.simpleryFullscreenEnd(); 
 	}
 
-
-
 	if (isFullscreen == 2) {
 		if ((e.which) == 37) // left arrow
 			if (prevImage.attr('src') != '')
@@ -164,6 +162,7 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 // define rowlength by window size
 (function( $ ){$.fn.simpleryAutoRowlength = function(getNumber) {
 	var galery = $(this);
+	var count = galery.find('li').length;
 
 	// remove rowlength classes
 	for (var i = hoverZoom.length-1; i >= 1; i--)
@@ -177,11 +176,14 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	else if (galery.width() < 7 * autoRowWidth) 	rowlength = 7;
 	else if (galery.width() < 8 * autoRowWidth) 	rowlength = 8;
 	else if (galery.width() >= 8 * autoRowWidth) 	rowlength = 9;
+ 
+	if (!galery.hasClass('simplery-fullscreen') && rowlength > count)
+		rowlength = count;
 
 	var add = 0;
 	if (galery.data('simplery-rowlength-add'))
 		add = galery.data('simplery-rowlength-add');		
- 
+
 	rowlength += add;
 
 	// change if it should be even or odd
