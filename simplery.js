@@ -261,9 +261,9 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 
 	var mode_icon = '';
 	if (mode == 'box')
-		mode_icon = 'fa-resize-full'; // 'fa-resize-fullscreen', 'fa-move'
+		mode_icon = 'fa-expand'; // 'fa-resize-fullscreen', 'fa-move'
 	else if (mode == 'fullscreen')
-		mode_icon = 'fa-resize-small';
+		mode_icon = 'fa-compress';
 
 	galery.append('<div class="simplery-menu">'
 		//+ '<i class="fa fa-info simplery-menu-info"></i>'

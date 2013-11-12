@@ -1,5 +1,6 @@
 /* Content:
  *
+	* clear
 	* before JavaScript 
 	* general 
 	* simplery-box
@@ -7,6 +8,23 @@
 	* simplery-help
  *
  */
+
+/*
+ * clear
+ */
+.simplery-fullscreen,
+.simplery ul,
+.simplery header,
+.simplery header *  {
+	max-width: 100% !important;
+	min-width: 0 !important;
+	padding: 0;
+}
+.simplery header,
+.simplery header h2 {
+	min-height: 0 !important;
+	margin: 0 !important;
+}
 
 /* 
  * before JavaScript 
@@ -110,6 +128,7 @@
 	position: relative;
 	overflow: hidden;
 	vertical-align: top;
+	margin: 0!important;
 }
 .simplery-box li:hover,
 .simplery-fullscreen li:hover {
