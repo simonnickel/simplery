@@ -318,8 +318,18 @@
 	top: 0; left: 0; bottom: 0; right: 0;
 	margin: 0 !important;
 
+	color: #ccc;
+}
+.simplery .simplery-help-bg {
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
+	margin: 0 !important;
+
 	border-radius: 2px;
 	background:rgba(255,255,255,0.2);
+}
+.simplery .simplery-help a {
+	color: #fff;
 }
 .simplery .simplery-help table {
 	position: absolute;
@@ -329,7 +339,7 @@
 	margin-left: -155px !important;
 
 	top:20%;
-	background:rgba(0,0,0,0.8);
+	background:rgba(0,0,0,0.9);
 	border-radius: 5px;
 }
 .simplery .simplery-help td {
@@ -356,6 +366,7 @@
 	padding-top:20px;
 	font-size: 12px;
 	text-align: center;
+	color:#999;
 }
 
 

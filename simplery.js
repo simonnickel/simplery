@@ -586,20 +586,25 @@ function getImageRatio(width, height) {
 	if (help.is('div'))
 		help.remove();
 	else
-		galery.append('<div class="simplery-help"><table>'
+		galery.append('<div class="simplery-help"><div class="simplery-help-bg"></div><table>'
 			+ '<tr><td class="simplery-help-close" colspan="2"><a href="">close</a></td></tr>'
 			+ '<tr><td class="simplery-help-key"><span>ESC</span></td> <td>Quit Galery</td></tr>'
 			+ '<tr><td class="simplery-help-key"><span>&larr;</span></td> <td>Previous Image</td></tr>'
 			+ '<tr><td class="simplery-help-key"><span>&rarr;</span></td> <td>Next Image</td></tr>'
 			+ '<tr><td class="simplery-help-key"><span>G</span></td> <td>Switch to Grid View</td></tr>'
-			+ '<tr><td class="simplery-help-info" colspan="2"><a href="http://simonnickel.de/devlog/projekte/simplery">simplery</a> by <a href="http://simonnickel.de">Simon Nickel</a> | GitHub</td></tr>'
+			+ '<tr><td class="simplery-help-info" colspan="2"><a href="http://simonnickel.de/devlog/projekte/simplery">simplery</a> by <a href="http://twitter.com/simonnickel">@simonnickel</a> | GitHub</td></tr>'
 			+ '</ul></div>');
 
 	help = galery.find('.simplery-help');
 	help.find('.simplery-help-close a').click(function(e) {
-			e.preventDefault();
-			help.remove();
-		});
+		e.preventDefault();
+		help.remove();
+	});
+
+	helpBg = galery.find('.simplery-help-bg');
+	helpBg.click(function(e) {
+		help.remove();
+	});
 
 	return this;
 };})( jQuery );
