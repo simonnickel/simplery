@@ -436,6 +436,9 @@ if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
 	else
 		prev.addClass('simplery-inactive');
 
+	// preload images
+	$([nextImage.parent().attr('href'), prevImage.parent().attr('href')]).preload();
+
 	// nav
 	img.simpleryFullscreenSingleViewNav();
 
@@ -645,4 +648,11 @@ function getImageRatio(width, height) {
 	return this;
 };})( jQuery );
 
+$.fn.preload = function() {
+    this.each(function(){
+        $('<img/>')[0].src = this;
+    });
+
+	return this;
+}
 
